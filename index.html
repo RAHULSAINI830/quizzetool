@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fire Conference Quiz</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            margin: 0;
+            background-color: #f9f9f9;
+        }
+
+        .quiz-container {
+            display: none;
+            background: #fff;
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 600px;
+            margin: 100px auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.5s ease-out;
+        }
+
+        .quiz-container.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .question {
+            display: none;
+            animation: fadeIn 0.6s ease-in-out;
+        }
+
+        .question.active {
+            display: block;
+        }
+
+        h4 {
+            font-size: 1.4em;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .option {
+            padding: 15px;
+            border-radius: 10px;
+            background: #f5f5f5;
+            border: 2px solid transparent;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .option:hover {
+            background: #feecee;
+            border-color: #ee5566;
+            transform: translateY(-5px);
+        }
+
+        .option.selected {
+            background: #feecee;
+            border-color: #ee5566;
+            box-shadow: 0 8px 20px rgba(238, 85, 102, 0.3);
+        }
+
+        .option span {
+            display: block;
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .option p {
+            margin: 5px 0 0;
+            font-size: 0.9em;
+            color: #555;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #ee5566;
+            color: white;
+            font-size: 1em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        .button:hover {
+            background: #d14c5c;
+            transform: translateY(-3px);
+        }
+
+        .button:active {
+            transform: translateY(1px);
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #444;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <button id="startQuiz" class="button" style="margin-top: 50px;">Start Quiz</button>
+
+    <div class="quiz-container" id="quizContainer">
+        <form id="quizForm">
+            <!-- Question 1 -->
+            <div class="question active" id="q1">
+                <h4>1. What’s Your Top Priority At A Fire Conference?</h4>
+                <div class="options">
+                    <div class="option" data-value="A">
+                        <span>A</span>
+                        <p>Diving into the latest tech – I want to play with fire safety gadgets!</p>
+                    </div>
+                    <div class="option" data-value="B">
+                        <span>B</span>
+                        <p>Networking with industry pros – I’m here to meet the movers and shakers.</p>
+                    </div>
+                    <div class="option" data-value="C">
+                        <span>C</span>
+                        <p>Learning the latest fire codes and laws – I want to be the go-to expert.</p>
+                    </div>
+                    <div class="option" data-value="D">
+                        <span>D</span>
+                        <p>Finding solutions to complex fire protection problems – I need answers!</p>
+                    </div>
+                </div>
+                <button type="button" class="button next-btn" data-next="q2">Next</button>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="question" id="q2">
+                <h4>2. What’s Your Ideal Conference Location?</h4>
+                <div class="options">
+                    <div class="option" data-value="A">
+                        <span>A</span>
+                        <p>California – sun, sand, and cutting-edge fire tech.</p>
+                    </div>
+                    <div class="option" data-value="B">
+                        <span>B</span>
+                        <p>Las Vegas – it's not just for gambling; I want big ideas and even bigger discussions.</p>
+                    </div>
+                    <div class="option" data-value="C">
+                        <span>C</span>
+                        <p>Florida – where it's always hot, and the fire safety talks are even hotter.</p>
+                    </div>
+                    <div class="option" data-value="D">
+                        <span>D</span>
+                        <p>Anywhere with a global perspective – time to broaden my horizons!</p>
+                    </div>
+                </div>
+                <button type="button" class="button next-btn" data-next="q3">Next</button>
+            </div>
+
+            <!-- Question 3 -->
+            <div class="question" id="q3">
+                <h4>3. What’s Your Specialty?</h4>
+                <div class="options">
+                    <div class="option" data-value="A">
+                        <span>A</span>
+                        <p>Fire alarms – I’m the one everyone calls when things go beep.</p>
+                    </div>
+                    <div class="option" data-value="B">
+                        <span>B</span>
+                        <p>Suppression systems – I know how to stop a fire in its tracks.</p>
+                    </div>
+                    <div class="option" data-value="C">
+                        <span>C</span>
+                        <p>Sprinklers – no fire gets past me without a good soak.</p>
+                    </div>
+                    <div class="option" data-value="D">
+                        <span>D</span>
+                        <p>General fire safety – I’m the fire safety Swiss army knife.</p>
+                    </div>
+                </div>
+                <button type="button" class="button next-btn" data-next="q4">Next</button>
+            </div>
+
+            <!-- Question 4 -->
+            <div class="question" id="q4">
+                <h4>4. How Do You Prefer To Learn At A Conference?</h4>
+                <div class="options">
+                    <div class="option" data-value="A">
+                        <span>A</span>
+                        <p>Hands-on demos – I’m all about playing with the newest fire tech.</p>
+                    </div>
+                    <div class="option" data-value="B">
+                        <span>B</span>
+                        <p>Exhibit halls – I want to see all the cool stuff up close.</p>
+                    </div>
+                    <div class="option" data-value="C">
+                        <span>C</span>
+                        <p>Workshops and seminars – I’m here to really dig deep into the details.</p>
+                    </div>
+                    <div class="option" data-value="D">
+                        <span>D</span>
+                        <p>Networking – I want to hear from real-world experts and share experiences.</p>
+                    </div>
+                </div>
+                <button type="button" class="button next-btn" data-next="q5">Next</button>
+            </div>
+
+            <!-- Question 5 -->
+            <div class="question" id="q5">
+                <h4>5. What’s Your Conference Energy?</h4>
+                <div class="options">
+                    <div class="option" data-value="A">
+                        <span>A</span>
+                        <p>I’m all about the shiny new gadgets and emerging trends.</p>
+                    </div>
+                    <div class="option" data-value="B">
+                        <span>B</span>
+                        <p>I want to meet the people behind the innovations.</p>
+                    </div>
+                    <div class="option" data-value="C">
+                        <span>C</span>
+                        <p>I need that deep dive into fire safety standards and compliance.</p>
+                    </div>
+                    <div class="option" data-value="D">
+                        <span>D</span>
+                        <p>I’m here for big ideas, global conversations, and networking with the best.</p>
+                    </div>
+                </div>
+                <button type="button" class="button next-btn" data-next="q6">Next</button>
+            </div>
+
+            <!-- Question 6 -->
+            <div class="question" id="q6">
+                <h4>6. How Do You Keep Your Fire Knowledge Sharp?</h4>
+                <div class="options">
+                    <div class="option" data-value="A">
+                        <span>A</span>
+                        <p>I stay up-to-date with the latest tech breakthroughs.</p>
+                    </div>
+                    <div class="option" data-value="B">
+                        <span>B</span>
+                        <p>I read all the fire protection magazines and online forums.</p>
+                    </div>
+                    <div class="option" data-value="C">
+                        <span>C</span>
+                        <p>I live and breathe fire safety codes and regulations.</p>
+                    </div>
+                    <div class="option" data-value="D">
+                        <span>D</span>
+                        <p>I chat with fellow pros and attend as many conferences as possible.</p>
+                    </div>
+                </div>
+                <button type="button" class="button next-btn" data-next="q7">Next</button>
+            </div>
+
+            <!-- Question 7 -->
+            <div class="question" id="q7">
+                <h4>7. What's Your Preferred Conference Vibe?</h4>
+                <div class="options">
+                    <div class="option" data-value="A">
+                        <span>A</span>
+                        <p>Big, bold, and buzzing with new tech.</p>
+                    </div>
+                    <div class="option" data-value="B">
+                        <span>B</span>
+                        <p>High energy, full of discussions that matter.</p>
+                    </div>
+                    <div class="option" data-value="C">
+                        <span>C</span>
+                        <p>Deep, informative, and all about mastering the craft.</p>
+                    </div>
+                    <div class="option" data-value="D">
+                        <span>D</span>
+                        <p>Global, diverse, and full of fresh perspectives.</p>
+                    </div>
+                </div>
+                <button type="button" class="button next-btn" data-next="q8">Next</button>
+            </div>
+
+            <!-- Question 8 -->
+            <div class="question" id="q8">
+                <h4>8. How Do You Handle Fire Protection Challenges?</h4>
+                <div class="options">
+                    <div class="option" data-value="A">
+                        <span>A</span>
+                        <p>I find the latest solutions and tech to tackle problems head-on.</p>
+                    </div>
+                    <div class="option" data-value="B">
+                        <span>B</span>
+                        <p>I collaborate with other experts to find cutting-edge solutions.</p>
+                    </div>
+                    <div class="option" data-value="C">
+                        <span>C</span>
+                        <p>I focus on compliance and making sure everything checks out.</p>
+                    </div>
+                    <div class="option" data-value="D">
+                        <span>D</span>
+                        <p>I’m a problem solver – I approach things from all angles.</p>
+                    </div>
+                </div>
+                <button type="button" class="button next-btn" data-next="q9">Next</button>
+            </div>
+
+            <!-- Question 9 -->
+            <div class="question" id="q9">
+                <h4>9. When It Comes To Fire Safety Trends, What Excites You Most?</h4>
+                <div class="options">
+                    <div class="option" data-value="A">
+                        <span>A</span>
+                        <p>Smart fire alarms and automated systems.</p>
+                    </div>
+                    <div class="option" data-value="B">
+                        <span>B</span>
+                        <p>New fire suppression tech that’s faster and more efficient.</p>
+                    </div>
+                    <div class="option" data-value="C">
+                        <span>C</span>
+                        <p>New building codes and fire regulations that make the world safer.</p>
+                    </div>
+                    <div class="option" data-value="D">
+                        <span>D</span>
+                        <p>Global innovations in fire safety – fire protection around the world.</p>
+                    </div>
+                </div>
+                <button type="button" class="button next-btn" data-next="q10">Next</button>
+            </div>
+
+            <!-- Question 10 -->
+            <div class="question" id="q10">
+                <h4>10. Which Of These Fire Protection Tech Terms Sounds The Coolest To You?</h4>
+                <div class="options">
+                    <div class="option" data-value="A">
+                        <span>A</span>
+                        <p>AI-powered fire alarms.</p>
+                    </div>
+                    <div class="option" data-value="B">
+                        <span>B</span>
+                        <p>Advanced suppression systems.</p>
+                    </div>
+                    <div class="option" data-value="C">
+                        <span>C</span>
+                        <p>Next-gen sprinkler designs.</p>
+                    </div>
+                    <div class="option" data-value="D">
+                        <span>D</span>
+                        <p>Global fire safety standards.</p>
+                    </div>
+                </div>
+                <button type="button" class="button next-btn" data-next="result">Finish</button>
+            </div>
+
+
+            <!-- Result -->
+            <div class="question" id="result">
+                <h4>Your Fire Conference Match:</h4>
+                <div id="resultText"></div>
+                <button type="button" class="button" id="restartQuiz">Restart Quiz</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('startQuiz').addEventListener('click', function () {
+            document.getElementById('quizContainer').classList.add('active');
+            this.style.display = 'none';
+        });
+
+        const nextButtons = document.querySelectorAll('.next-btn');
+        const options = document.querySelectorAll('.option');
+        const answers = { A: 0, B: 0, C: 0, D: 0 };
+
+        options.forEach(option => {
+            option.addEventListener('click', function () {
+                const parentOptions = this.parentElement.querySelectorAll('.option');
+                parentOptions.forEach(opt => opt.classList.remove('selected'));
+                this.classList.add('selected');
+                this.parentElement.setAttribute('data-selected', this.getAttribute('data-value'));
+            });
+        });
+
+        nextButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const parent = this.parentElement;
+                const selectedValue = parent.querySelector('.options').getAttribute('data-selected');
+
+                if (!selectedValue) {
+                    alert('Please select an answer before proceeding!');
+                    return;
+                }
+
+                answers[selectedValue]++;
+
+                parent.classList.remove('active');
+                const nextId = this.getAttribute('data-next');
+                const nextElement = document.getElementById(nextId);
+                if (nextElement) {
+                    nextElement.classList.add('active');
+                }
+
+                if (nextId === 'result') {
+                    calculateResult();
+                }
+            });
+        });
+
+        function calculateResult() {
+            const maxCount = Math.max(...Object.values(answers)); // Find the highest count
+            const tiedChoices = Object.keys(answers).filter(key => answers[key] === maxCount); // Find all tied choices
+
+            let resultText = '';
+            if (tiedChoices.length > 1) {
+                // If there are ties, display all matching results
+                resultText = `<b style="color: #ee5566; font-size: 1.5em;">It's a tie! You're matched with multiple conferences:</b><br><br>`;
+                tiedChoices.forEach(choice => {
+                    switch (choice) {
+                        case 'A':
+                            resultText += `<b style="color: #ee5566; font-size: 1.3em;">CAFAA 55th Annual Conference 2025</b><br><br>
+                                   You live for the latest tech and new gadgets. The CAFAA conference will blow your mind with fire alarm advancements and real-world solutions. Be ready to geek out over all the cool, cutting-edge tools.<br><br>`;
+                            break;
+                        case 'B':
+                            resultText += `<b style="color: #ee5566; font-size: 1.3em;">NFPA 2025 Conference & Expo</b><br><br>
+                                   Networking with fire protection industry leaders is your jam. This event is full of opportunities to rub elbows with the best in the business, and discover what’s next for the industry.<br><br>`;
+                            break;
+                        case 'C':
+                            resultText += `<b style="color: #ee5566; font-size: 1.3em;">AFSA44 Convention & Expo</b><br><br>
+                                   Fire safety isn’t just a job; it’s a passion. You want to master the codes, laws, and standards. AFSA is where you’ll learn from the best and take your fire safety knowledge to new heights.<br><br>`;
+                            break;
+                        case 'D':
+                            resultText += `<b style="color: #ee5566; font-size: 1.3em;">Fire Safety Event 2025 (UK)</b><br><br>
+                                   Your fire safety knowledge knows no borders. The UK event will give you an international perspective on everything from fire tech to safety regulations. Ready to take your skills global?<br><br>`;
+                            break;
+                    }
+                });
+            } else {
+                // No tie, display the single result
+                const maxChoice = tiedChoices[0];
+                switch (maxChoice) {
+                    case 'A':
+                        resultText = `<b style="color: #ee5566; font-size: 1.5em;">CAFAA 55th Annual Conference 2025</b><br>
+                              You live for the latest tech and new gadgets. The CAFAA conference will blow your mind with fire alarm advancements and real-world solutions. Be ready to geek out over all the cool, cutting-edge tools.`;
+                        break;
+                    case 'B':
+                        resultText = `<b style="color: #ee5566; font-size: 1.5em;">NFPA 2025 Conference & Expo</b><br>
+                              Networking with fire protection industry leaders is your jam. This event is full of opportunities to rub elbows with the best in the business, and discover what’s next for the industry.`;
+                        break;
+                    case 'C':
+                        resultText = `<b style="color: #ee5566; font-size: 1.5em;">AFSA44 Convention & Expo</b><br>
+                              Fire safety isn’t just a job; it’s a passion. You want to master the codes, laws, and standards. AFSA is where you’ll learn from the best and take your fire safety knowledge to new heights.`;
+                        break;
+                    case 'D':
+                        resultText = `<b style="color: #ee5566; font-size: 1.5em;">Fire Safety Event 2025 (UK)</b><br>
+                              Your fire safety knowledge knows no borders. The UK event will give you an international perspective on everything from fire tech to safety regulations. Ready to take your skills global?`;
+                        break;
+                }
+            }
+
+            document.getElementById('resultText').innerHTML = resultText;
+        }
+
+
+
+        document.getElementById('restartQuiz').addEventListener('click', function () {
+            location.reload();
+        });
+    </script>
+</body>
+
+</html>
